@@ -61,7 +61,7 @@ Aqui estão algumas possíveis melhorias que podem ser implementadas no projeto:
 
 2. **Implementar paginação**: Se o número de posts e comentários crescer significativamente, a página ficaria com uma navegação lenta. Implementar uma paginação nos endpoints que retornam os dados seria o ideal para resolver esse problema. Além de ajudar a reduzir a carga do servidor, também melhora a velocidade de resposta dos dados e a navegação dos usuários.
 
-### Melhoria na Cobertura de Testes Unitários
+### Melhoria na Cobertura de Testes
 
 1. **Testes não implementados**: Não foram implementados testes de cobertura, testes de controle de acesso, testes de validação, testes de integração ou testes de desempenho. A aplicação inteira foi testada manualmente enquanto era desenvolvida. Implementar testes iria garantir que o código está funcionando como deveria.
 
