@@ -1,54 +1,26 @@
 require "test_helper"
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
   setup do
     @user = users(:one)
-    log_in_as(@user)
   end
 
-  def log_in_as(user, password: 'password')
-    post login_path, params: { session: { email: user.email, password: password} }
-  end
-
-
-  test "should get index" do
-    get users_url
-    assert_response :success
-  end
-
-  test "should get new" do
-    get new_user_url
-    assert_response :success
-  end
-
-  test "should create user" do
+  test 'should be able to register' do
     assert_difference('User.count') do
-      post users_url, params: { user: { email: @user.email, name: @user.name } }
+      post '/users', params: { user: { email: 'abc@gmail.com', password: 'very-secret', password_confirmation: 'very-secret' } }
     end
-
-    assert_redirected_to user_url(User.last)
+    assert_redirected_to root_url
   end
 
-  test "should show user" do
-    get user_url(@user)
-    assert_response :success
+  test 'should be able to login' do
+    post user_session_url, params: { user: { email: @user.email, password: 'password' } }
+    assert_redirected_to root_url
   end
 
-  test "should get edit" do
-    get edit_user_url(@user)
-    assert_response :success
-  end
-
-  test "should update user" do
-    patch user_url(@user), params: { user: { email: @user.email, name: @user.name } }
-    assert_redirected_to user_url(@user)
-  end
-
-  test "should destroy user" do
-    assert_difference('User.count', -1) do
-      delete user_url(@user)
-    end
-
-    assert_redirected_to users_url
+  test 'should be able to logout' do
+    puts @user
+    delete destroy_user_session_url
+    assert_redirected_to root_url
   end
 end

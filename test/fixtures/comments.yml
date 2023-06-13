@@ -2,16 +2,32 @@
 
 one:
   id: 1
-  body: MyText
-  user: one
-  post: one
-  replying_to_user: 1
-  replying_to_comment: 1
+  body: My Text Body
+  user_id: 1
+  post_id: 1
+  replying_to_user:
+  replying_to_comment:
 
 two:
   id: 2
-  body: MyText
-  user: two
-  post: two
+  body: My Text Body
+  user_id: 1
+  post_id: 2
+  replying_to_user: 1
+  replying_to_comment: 1
+
+three:
+  id: 3
+  body: My Text Body
+  user_id: 2
+  post_id: 1
+  replying_to_user:
+  replying_to_comment:
+
+four:
+  id: 4
+  body: My Text Body
+  user_id: 2
+  post_id: 2
   replying_to_user: 2
-  replying_to_comment: 2
+  replying_to_comment: 3

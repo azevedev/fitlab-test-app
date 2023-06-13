@@ -61,13 +61,15 @@ Aqui estão algumas possíveis melhorias que podem ser implementadas no projeto:
 
 2. **Implementar paginação**: Se o número de posts e comentários crescer significativamente, a página ficaria com uma navegação lenta. Implementar uma paginação nos endpoints que retornam os dados seria o ideal para resolver esse problema. Além de ajudar a reduzir a carga do servidor, também melhora a velocidade de resposta dos dados e a navegação dos usuários.
 
+3. **Upvotes/DownVotes**: Não há Likes/Dislikes (up_votes e down_votes) para Comentários. Seria uma boa forma de indicar o quão bem um comentário é avaliado em uma postagem.
+
 ### Melhoria na Cobertura de Testes
 
-1. **Testes não implementados**: Não foram implementados testes de cobertura, testes de controle de acesso, testes de validação, testes de integração ou testes de desempenho. A aplicação inteira foi testada manualmente enquanto era desenvolvida. Implementar testes iria garantir que o código está funcionando como deveria.
+1. **Testes não implementados**: Não foram implementados testes de cobertura ou testes de desempenho. A aplicação inteira foi testada manualmente enquanto era desenvolvida e alguns testes de base foram feitos, como autenticação e CRUDS. Implementar os demais testes iria garantir que o código está funcionando como deveria.
 
 
 Essas são apenas algumas sugestões de melhorias que podem ser implementadas no projeto. Lembre-se de priorizar as melhorias com base nas necessidades do aplicativo e nos requisitos do processo seletivo.
 
-Agradeço a oportunidade de participar desse processo seletivo, caso surga alguma dúvida por favor basta entrar em contato através do meu e-mail ou telefone.
+Agradeço a oportunidade de participar desse processo seletivo, caso tenha alguma dúvida por favor basta entrar em contato através do meu e-mail ou telefone.
 
 ##
