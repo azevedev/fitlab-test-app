@@ -70,6 +70,8 @@ Aqui estão algumas possíveis melhorias que podem ser implementadas no projeto:
 
 Essas são apenas algumas sugestões de melhorias que podem ser implementadas no projeto. Lembre-se de priorizar as melhorias com base nas necessidades do aplicativo e nos requisitos do processo seletivo.
 
+Dentro do projeto, existe o arquivo CARDS.md. Esse arquivo contém os cards criados para guiar o processo de desenvolvimento da aplicação.
+
 Agradeço a oportunidade de participar desse processo seletivo, caso tenha alguma dúvida por favor basta entrar em contato através do meu e-mail ou telefone.
 
 ##
