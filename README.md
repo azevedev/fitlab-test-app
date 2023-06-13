@@ -68,5 +68,6 @@ Aqui estão algumas possíveis melhorias que podem ser implementadas no projeto:
 
 Essas são apenas algumas sugestões de melhorias que podem ser implementadas no projeto. Lembre-se de priorizar as melhorias com base nas necessidades do aplicativo e nos requisitos do processo seletivo.
 
-Agradeço a oportunidade de participar desse processo seletivo, caso surga alguma dúvida por favor basta entrar em contato, seja pelo meu [e-mail](azevedev@gmail.com) ou [telefone](91088699)
+Agradeço a oportunidade de participar desse processo seletivo, caso surga alguma dúvida por favor basta entrar em contato através do meu e-mail ou telefone.
+
 ##
