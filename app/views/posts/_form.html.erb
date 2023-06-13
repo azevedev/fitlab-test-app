@@ -1,0 +1,25 @@
+<div class="container">
+<%= form_with(model: post) do |form| %>
+
+  <%= form.text_field :user_id, hidden: true, value: current_user.id %>
+
+  <div class="form-field">
+    <%= form.label :title, "Título", class: "form-label" %>
+    <%= form.text_field :title, class: "form-control", required: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :category, "Categoria", class: "form-label"%>
+    <%= form.text_field :category, class: "form-control", required: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :body, "Texto", class: "form-label"%>
+    <%= form.text_area :body, class: "form-control", required: true %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Salvar", class: "btn btn-lg btn-success w-25" %>
+  </div>
+<% end %>
+</div>

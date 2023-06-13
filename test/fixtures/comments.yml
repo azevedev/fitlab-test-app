@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 1
+  body: MyText
+  user: one
+  post: one
+  replying_to_user: 1
+  replying_to_comment: 1
+
+two:
+  id: 2
+  body: MyText
+  user: two
+  post: two
+  replying_to_user: 2
+  replying_to_comment: 2

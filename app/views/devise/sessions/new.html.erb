@@ -1,0 +1,87 @@
+<section class="vh-100">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card bg-primary text-white" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+            <div class="md-5 mt-md-4 pb-5">
+              <h2 class="fw-bold mb-2 text-uppercase text-white">Logue-se</h2>
+              <p class="text-white mb-5">Por favor, use suas credenciais para logar</p>
+
+              <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+                <div class="form-outline form-white mb-5 form-txt">
+                  <%= f.email_field :email, required: true, autocomplete: "email", class: "form-control form-control-lg label-in" %>
+                  <%= f.label :email, "E-mail", class: "form-label" %>
+                </div>
+
+                <div class="form-outline form-white mb-5 form-txt">
+                  <%= f.password_field :password, required: true, autocomplete: "current-password", class: "form-control form-control-lg label-in" %>
+                  <%= f.label :password, "Senha", class: "form-label" %>
+                </div>
+
+                <div class="actions">
+                  <%= f.submit "Entrar", class: "btn btn-outline-light btn-lg px-5" %>
+                </div>
+              <% end %>
+              <% resource.errors.full_messages.each do |msg| %>
+                  <div class="text-danger mb-2 mt-2"><%= msg %></div>
+              <% end %>
+            </div>
+            <div>
+              <p class="mb-0 text-white">Não tem uma conta? <%= link_to "Cadastre-se", new_user_registration_path, class: "text-white fw-bold" %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.form-txt {
+  position: relative;
+}
+
+.form-txt label{
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: gray;
+  transition: 0.25s ease-out;
+}
+
+input.form-control.label-out ~ label  { top: -60%; left: 14px; color: black; }
+input.form-control.label-in ~ label { top: 25%; left: 20px; color: gray; }
+
+input:focus:required:invalid{ color: red; border-color: red; box-shadow: 0 0 6px red;}
+input:focus:required:valid{ border-color: green; box-shadow: 0 0 8px green;}
+</style>
+
+<script>
+    var opposite = {"label-out": 'label-in', "label-in": 'label-out'};
+    (function() {
+        console.log("opa!")
+        var inputs = Array.from(document.getElementsByClassName('form-control'));
+        for(const index in inputs){
+          if(inputs[index].value != "") toggleClass(inputs[index], "label-out")
+        }
+    })();
+
+    
+    function toggleClass(inputForm, classString) {
+      inputForm.classList.add(classString);
+      console.log("toggle " + classString)
+      inputForm.classList.remove(opposite[classString]);
+    }
+
+    var inputs = Array.from(document.getElementsByClassName('form-control'));
+    for(const index in inputs){
+      inputs[index].addEventListener('input', function (evt) {
+        console.log("event")
+        if(this.value == "") toggleClass(this, "label-in")
+        if(this.value != "") toggleClass(this, "label-out")
+      })
+    }
+      
+</script>

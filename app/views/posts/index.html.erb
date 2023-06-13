@@ -1,0 +1,80 @@
+<div class="d-flex vw-100 justify-content-center mb-5">
+<div class="card d-flex mt-5" style="width: 69rem; height: 90%;">
+  <div class="card-body">
+  <p id="notice"><%= notice %></p>
+  <div class="d-flex justify-content-between mb-2">
+    <%= link_to "Criar post", new_post_path, class: "btn btn-lg btn-success text-white" %>
+    <%= link_to "Sair", destroy_user_session_path, method: :delete, class: "btn btn-lg btn-danger text-white px-4" %>
+  </div>
+    <!--Table-->
+    <table class="table table-hover table-forum text-center">
+      <!--Table head-->
+      <thead>
+        <tr>
+          <th>Likes / Dislikes</th>
+          <th>Posts</th>
+          <th>Comentários</th>
+        </tr>
+      </thead>
+      <!--Table head-->
+      <!--Table body-->
+      <tbody>
+      <% if @posts.any? %>
+      <% @posts.each do |post| %>
+        <tr>
+          <td scope="row" class="text-nowrap">
+            <% upvoted, downvoted = current_user.voted?(post)%>
+            <%= button_to [:upvote, post], form_class:"btn btn-outline-primary btn-sm p-1 m-0 waves-effect #{upvoted}" do %>
+                <span class="value"> <%= post.up_votes %> </span>
+                <i class="fas fa-thumbs-up ml-1"></i>
+            <% end %>
+            <%= button_to [:downvote, post], form_class:"btn btn-outline-danger btn-sm p-1 m-0 waves-effect #{downvoted}" do %>
+                <span class="value"> <%= post.down_votes %> </span>
+                <i class="fas fa-thumbs-down ml-1"></i>
+            <% end %>
+          </td>
+          <td class="text-start">
+            <a href="<%= post_path(post)%>" class="font-weight-bold blue-text align-text-bottom">
+              <%= post.title %>
+            </a> 
+            <div class="my-2 px-1">
+              <strong><%= post.user.name %></strong>
+              <span class="badge bg-primary mx-1"><%= post.category %></span>
+              <span><%= distance_of_time_in_words(Time.now, post.created_at) %></span>
+            </div>
+          </td>
+          <td>
+            <span><%= post.comments.count %></span>
+            <i class="fas fa-comments ml-1"></i>
+            <br/>
+            <a href="<%= post_path(post)%>" class="rsp-link">
+              Ver todos
+            </a>
+          </td>
+        </tr>
+        <% end %>
+        <% else %>
+         <tr>
+         <td colspan="3">nenhum post disponível</td>
+         </tr>
+        <% end %>
+      </tbody>
+      <!--Table body-->
+    </table>
+  </div>
+</div>
+</div>
+
+<style>
+
+a {
+  padding: 5px;
+  border-radius: 8px;
+}
+
+a:hover{
+  background-color: #badbff;
+  color: black;
+}
+
+</style>

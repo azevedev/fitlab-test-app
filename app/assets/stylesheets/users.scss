@@ -1,0 +1,64 @@
+// Place all the styles related to the Users controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+.hero-banner {
+    width: 100vw;
+    min-height: 100vh;
+    background-color: #3755BE;
+    display: flex;
+    color: #fff;
+    justify-content: center;
+    align-items: center;
+    font-weight: normal;
+    flex-direction: column;
+}
+
+.hero-banner>.uptop {
+    z-index: 99;
+}
+
+.btn-posts {
+    margin: 60px;
+    width: 350px;
+    padding: 18px;
+    border: none;
+    color: white !important;
+    background-color: green;
+    font-size: 3em;
+    border-radius: 12px;
+    text-decoration: none;
+    text-align: center;
+}
+
+#svg1 {
+    position: absolute;
+    top: -300px;
+    right: -200px;
+    width: 750px;
+    opacity: 0.5;
+}
+
+#svg2 {
+    position: absolute;
+    top: 0;
+    left: -380px;
+    width: 950px;
+    opacity: 0.5;
+}
+
+.curved-background {
+    /* Background color */
+    background-color: red;
+    /* You can use gradient background color such as */
+    /* background: linear-gradient(rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.1) 100%); */
+    /* Curved corners */
+    border-bottom-left-radius: 50% 40%;
+    border-bottom-right-radius: 50% 40%;
+    /* Size */
+    height: 50%;
+    width: 100vw;
+}
+
+.hero-banner>h1 {
+    font-size: 5em;
+}

@@ -1,0 +1,14 @@
+<%= form_with(model: comment) do |form| %>
+  <%= form.text_field :user_id, hidden: true %>
+  <%= form.text_field :post_id, hidden: true %>
+  <%= form.text_field :replying_to_id, hidden: true %>
+
+  <div class="field">
+    <%= form.label :body, "Texto", class: "form-label" %>
+    <%= form.text_area :body, class: "form-control" %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Salvar", class: "btn btn-lg btn-success w-25" %>
+  </div>
+<% end %>

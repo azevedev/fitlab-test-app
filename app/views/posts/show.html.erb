@@ -1,0 +1,213 @@
+<section class="container">
+  <div class="card mt-5 border-info mb-3">
+    <% if current_user.owns?(@post) %>
+      <div class="d-flex justify-content-between">
+          <%= link_to 'Editar post', edit_post_path(@post), class: "btn btn-lg bg-success text-white m-4"%> 
+          <%= link_to 'Deletar', post_path(@post), method: :delete, data: { confirm: 'Tem certeza?' }, class: "btn btn-lg bg-danger text-white m-4"%> 
+      </div>
+    <% end %>
+
+    <div class="card-body">
+      <div class="card-title">
+        <h2><%= @post.title %></h2>
+        <div>
+         <img src="https://api.minimalavatars.com/avatar/<%= "#{@post.user.id}-#{@post.user.name}" %>/png" width="40px"/>
+         Autor: <%= @post.user.name %>
+         <span class="badge bg-primary"><%= @post.category %></span>
+        <div>
+      </div>
+      <p class="card-text">
+        <%= @post.body %>
+      </p>
+      <br>
+      <p>Deixe um comentário:</p>
+      <%= form_for(Comment.new) do |form| %>
+        <%= form.number_field :user_id, value: current_user.id, hidden: true %>
+        <%= form.number_field :post_id, value: @post.id, hidden: true %>
+        <%= form.number_field :replying_to_comment, value: nil, hidden: true %>
+        <%= form.number_field :replying_to_user, value: nil, hidden: true %>
+
+        <%= form.text_area :body, class: "form-control" %>
+        <%= form.submit "Salvar", class: "btn btn-md btn-success w-25 mt-3" %>
+      <% end %>
+
+      <% if @post.comments.any? %>
+      <section class="p-1 m-1 mt-4">
+      <% @post.unique_comments.each do |comment| %>
+        <div class="comment p-3 mb-3">
+          <div class="d-flex align-content-center align-items-center justify-content-between">
+            <p class="m-0"><img src="https://api.minimalavatars.com/avatar/<%= "#{comment.user.id}-#{comment.user.name}" %>/png" width="25px"/> <%= comment.user.name %> | <%= distance_of_time_in_words(Time.now, comment.created_at) %> </p>
+            <% if current_user.owns?(comment) %>
+              <div class="d-flex justify-content-end">
+                <%= link_to 'Editar', edit_comment_path(comment), class: "btn btn-sm bg-success text-white m-1"%> 
+                <%= link_to 'Deletar', comment_path(comment), method: :delete, data: { confirm: 'Tem certeza?' }, class: "btn btn-sm bg-danger text-white m-1"%> 
+              </div>
+            <% end %>
+          </div>
+          
+          <div class="mt-2 w-80 d-flex align-items-center">
+            <p class="m-1"><%= comment.body %></p>
+          </div>
+          <div class="mt-2 d-flex flex-column align-items-left justify-content-left">
+            <div class="mb-3">
+              <button class="small p-1" style="border-radius: 6px;" onclick="showForm('comment_<%= comment.id %>')">Responder comentário</button>
+              <div style="display: none;" id="comment_<%= comment.id %>">
+                <%= form_for(Comment.new) do |form| %>
+                  <%= form.number_field :user_id, value: current_user.id, hidden: true %>
+                  <%= form.number_field :post_id, value: @post.id, hidden: true %>
+                  <%= form.number_field :replying_to_comment, value: comment.id, hidden: true %>
+                  <%= form.number_field :replying_to_user, value: nil, hidden: true %>
+                  <%= form.text_area :body, id: "input_comment_#{comment.id}", class: "form-control w-100 mb-2 mt-1", placeholder: "Deixe sua resposta...", required: true %>
+                  <%= form.submit "Salvar", class: "btn btn-outline-primary" %>
+                  <button class="btn btn-outline-danger" onclick="hideForm(event, 'comment_<%= comment.id %>')">Cancelar</button>
+                <% end %>
+              </div>
+            </div>
+
+            <% if comment.replies.any? %>
+            <div>
+              <div>
+                <a href="#" class="rsp-link" id="see_replys" onclick="toggleReplies(event, 'reply_comments_<%= comment.id %>')">
+                  <i class="fa fa-chevron-down " aria-hidden="true" id="show_icon"></i>
+                  <i class="fa fa-chevron-up " aria-hidden="true" id="hide_icon" style="display: none;" ></i>
+                  <%= comment.replies.count %> resposta(s)
+                </a>
+              </div>
+              <div style="display: none;" id="reply_comments_<%= comment.id %>">
+                <% comment.replies.each do |comment_reply| %>
+                  <div class="comment p-3">
+                    <div class="p-1 px-2 d-flex align-content-center align-items-center justify-content-between" 
+                    style="background-color: #ddd; height: 48px; border-radius: 8px;">
+                      <p class="m-0"><img src="https://api.minimalavatars.com/avatar/<%= "#{comment_reply.user.id}-#{comment_reply.user.name}" %>/png" width="25px"/> <%= comment_reply.user.name %> | <%= distance_of_time_in_words(Time.now, comment_reply.created_at) %> </p>
+                      <% if current_user.owns?(comment_reply) %>
+                      <div class="d-flex justify-content-end">
+                        <%= link_to 'Editar', edit_comment_path(comment_reply), class: "btn btn-sm bg-success text-white m-1"%> 
+                        <%= link_to 'Deletar', comment_path(comment_reply), method: :delete, data: { confirm: 'Tem certeza?' }, class: "btn btn-sm bg-danger text-white m-1"%> 
+                      </div>
+                    <% end %>
+                    </div>
+                    <div class="mt-2 w-80 d-flex align-items-center">
+                      <p class="m-1"> 
+                        <% if comment_reply.replying_to_user != nil %>
+                           <span>Respondendo <%= comment_reply.getUserReply %>:</span>
+                        <% end %>
+                        <%= comment_reply.body %>
+                      </p>
+                    </div>
+
+                    <div class="mb-3">
+                        <button class="small px-3" style="border-radius: 6px;" onclick="showForm('comment_reply_<%= comment_reply.id %>')">Responder</button>
+                        <div style="display: none;" id="comment_reply_<%= comment_reply.id %>">
+                          <%= form_for(Comment.new) do |form| %>
+                            <%= form.number_field :user_id, value: current_user.id, hidden: true %>
+                            <%= form.number_field :post_id, value: @post.id, hidden: true %>
+                            <%= form.number_field :replying_to_comment, value: comment.id, hidden: true %>
+                            <%= form.number_field :replying_to_user, value: comment_reply.user.id, hidden: true %>
+                            <%= form.text_area :body, id: "input_comment_reply_#{comment_reply.id}", class: "form-control w-100 mb-2 mt-1", placeholder: "Deixe sua resposta...", required: true %>
+                            <%= form.submit "Salvar", class: "btn btn-outline-primary" %>
+                            <button class="btn btn-outline-danger" onclick="hideForm(event, 'comment_reply_<%= comment_reply.id %>')">Cancelar</button>
+                          <% end %>
+                        </div>
+                      </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+            <% end %>
+            
+          </div>
+          
+        </div>
+        <% end %>
+      </section>
+      <% else %>
+        <br>
+        <br>
+        <p class="mx-2">Nenhum comentário encontrado...</p>
+      <% end %>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<%= link_to 'Voltar', posts_path, class: "px-5 btn btn-outline-info mb-5" %>
+
+<style>
+body {
+  overflow: scroll;
+}
+
+
+.rsp-link {
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.rsp-link:hover{
+  background-color: #4f64c6;
+}
+
+.card-text {
+    background-color: #eee;
+    padding: 18px;
+    border-radius: 8px;
+    margin: 12px;
+}
+
+.comments {
+  padding: 8px;
+  border-top: 3px solid #eaeaea;
+  margin: 12px;
+  margin-top: 32px;
+}
+
+.comment{
+  background: #eee;
+  border-radius: 12px;
+}
+
+</style>
+
+<script>
+  function showForm(id){ 
+    console.log("opa2")
+    console.log(id)
+    const form = document.getElementById(id)
+    console.log(form)
+    form.style.display = "block";
+  }
+  
+
+  function hideForm(evt, id){ 
+    console.log("opa")
+    console.log(id)
+    const form = document.getElementById(id)
+    const inputForm = document.getElementById('input_' + id)
+    console.log(form)
+    form.style.display = "none";
+    inputForm.value = '';
+    evt = evt || window.event;
+    evt.preventDefault();
+  }
+
+  function toggleReplies(evt, id){
+    console.log("opa3")
+    const form = document.getElementById(id)
+    const showIcon = document.getElementById('show_icon')
+    const hideIcon = document.getElementById('hide_icon')
+    if(form.style.display == "block"){
+      form.style.display = "none"
+      showIcon.style.display = 'inline-block'
+      hideIcon.style.display = 'none'
+    } else {
+      form.style.display = "block"
+      showIcon.style.display = 'none'
+      hideIcon.style.display = 'inline-block'
+    }
+    evt = evt || window.event;
+    evt.preventDefault();
+  }
+
+
+</script>
