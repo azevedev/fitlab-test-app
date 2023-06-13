@@ -19,7 +19,6 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should be able to logout' do
-    puts @user
     delete destroy_user_session_url
     assert_redirected_to root_url
   end

@@ -10,11 +10,9 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
   def log_in_as(email, password: 'password')
     post user_session_url, params: { user: { email: email, password: password } }
-  end 
+  end
 
   test 'should get index' do
-    puts @user
-    # log_in_as(@user.email)
     get posts_url
     assert_response :success
   end
